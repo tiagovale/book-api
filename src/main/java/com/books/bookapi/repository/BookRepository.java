@@ -7,5 +7,6 @@ import com.books.bookapi.model.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
+	Book findByIdOrName(Long id, String name);
 
 }

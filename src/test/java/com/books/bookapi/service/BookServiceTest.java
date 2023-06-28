@@ -1,6 +1,7 @@
 package com.books.bookapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,9 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.books.bookapi.dto.BookDto;
 import com.books.bookapi.model.Book;
 import com.books.bookapi.repository.BookRepository;
 
@@ -30,7 +31,6 @@ public class BookServiceTest {
 
 	@BeforeEach
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
 		Book book = new Book();
 		book.setName("teste");
 
@@ -51,22 +51,22 @@ public class BookServiceTest {
 
 	@Test
 	public void saveSuccessTest() {
-		Book book = new Book();
+		BookDto book = new BookDto();
 		book.setName("teste");
 
 		bookService.save(book);
 
-		verify(bookRepository).save(book);
+		verify(bookRepository).save(any());
 
 	}
 
 	@Test
 	public void saveFailTest() {
-		Book book = new Book();
+		BookDto bookDto = new BookDto();
 
-		bookService.save(book);
+		bookService.save(bookDto);
 
-		verify(bookRepository, never()).save(book);
+		verify(bookRepository, never()).save(any());
 
 	}
 
