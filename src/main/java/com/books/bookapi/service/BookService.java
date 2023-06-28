@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.books.bookapi.dto.BookDto;
+import com.books.bookapi.exception.BookNotFoundException;
 import com.books.bookapi.mapper.BookMapper;
 import com.books.bookapi.model.Book;
 import com.books.bookapi.repository.BookRepository;
@@ -40,10 +41,10 @@ public class BookService implements IBookService {
 	}
 	
 	@Override
-	public void update(Long id, BookDto bookDto) {
-		try {
+	public void update(Long id, BookDto bookDto) throws BookNotFoundException {
+		
 			 Book book = bookRepository.findById(id)
-		                .orElseThrow(() -> new Exception("Book not found"));
+		                .orElseThrow(() -> new BookNotFoundException("Book not found"));
 		
 			if(!Objects.isNull(book)) {
 				Book bookUpdated = BookMapper.mapToEntity(bookDto);
@@ -51,17 +52,14 @@ public class BookService implements IBookService {
 				bookRepository.save(bookUpdated);
 			}
 			
-		} catch (Exception e) {
-			System.out.println("Error message" + e.getMessage());
-		}
+		} 
 		
-	}
 	
 	@Override
 	@Transactional
-	public void delete(BookDto bookDto) {
+	public void delete(Long bookId) {
 		try {
-			Book book = bookRepository.findByIdOrName(bookDto.getId(), bookDto.getName());
+			Book book = bookRepository.findById(bookId).get();
 		
 			if(!Objects.isNull(book)) {
 				bookRepository.delete(book);

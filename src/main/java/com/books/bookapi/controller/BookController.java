@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.books.bookapi.dto.BookDto;
+import com.books.bookapi.exception.BookNotFoundException;
 import com.books.bookapi.model.Book;
 import com.books.bookapi.service.BookService;
 
@@ -37,14 +38,14 @@ public class BookController {
 	}
 	
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void update(@PathVariable Long id, @RequestBody BookDto bookDto) {
+	@ResponseStatus(HttpStatus.OK)
+	public void update(@PathVariable Long id, @RequestBody BookDto bookDto) throws BookNotFoundException {
 		bookService.update(id, bookDto);
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@RequestBody BookDto bookDto) {
-		bookService.delete(bookDto);
+	public void delete(@PathVariable Long id) {
+		bookService.delete(id);
 	}
 }
