@@ -2,6 +2,7 @@ package com.books.bookapi.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,10 +60,10 @@ public class BookService implements IBookService {
 	@Transactional
 	public void delete(Long bookId) {
 		try {
-			Book book = bookRepository.findById(bookId).get();
+			Optional<Book> book = bookRepository.findById(bookId);
 		
-			if(!Objects.isNull(book)) {
-				bookRepository.delete(book);
+			if(book.isPresent()) {
+				bookRepository.delete(book.get());
 			}
 			
 		} catch (Exception e) {

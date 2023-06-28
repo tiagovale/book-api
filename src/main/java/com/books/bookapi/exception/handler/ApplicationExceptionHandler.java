@@ -13,7 +13,7 @@ import com.books.bookapi.exception.BookNotFoundException;
 public class ApplicationExceptionHandler {
 
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(BookNotFoundException.class)
     public Map<String, String> handleBusinessException(BookNotFoundException ex) {
         Map<String, String> errorMap = new HashMap<>();
