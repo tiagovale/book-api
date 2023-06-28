@@ -14,7 +14,7 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	private String name;
 
@@ -50,5 +50,5 @@ public class Book {
 		Book other = (Book) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

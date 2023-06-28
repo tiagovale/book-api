@@ -17,7 +17,7 @@ import com.books.bookapi.service.BookService;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-	
+
 	@Autowired
 	private BookService bookService;
 
@@ -25,7 +25,7 @@ public class BookController {
 	public List<Book> getAll() {
 		return bookService.getAll();
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void save(@RequestBody Book book) {
