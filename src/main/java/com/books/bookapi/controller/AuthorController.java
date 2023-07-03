@@ -14,45 +14,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.books.bookapi.dto.BookDto;
-import com.books.bookapi.exception.BookNotFoundException;
-import com.books.bookapi.model.Book;
-import com.books.bookapi.service.BookService;
+import com.books.bookapi.dto.AuthorDto;
+import com.books.bookapi.model.Author;
+import com.books.bookapi.service.AuthorService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/books")
-public class BookController {
+@RequestMapping("/authors")
+public class AuthorController {
 
 	@Autowired
-	private BookService bookService;
+	private AuthorService authorService;
 
 	@GetMapping
-	public List<Book> getAll() {
-		return bookService.getAll();
+	public List<Author> getAll() {
+		return authorService.getAll();
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void save(@Valid @RequestBody BookDto bookDto) {
-		try {
-			bookService.save(bookDto);
-		} catch (Exception e) {
-			System.out.println("Exception" + e.getMessage());
-		}
-
+	public void save(@Valid @RequestBody AuthorDto authorDto) {
+		
+		authorService.save(authorDto);
 	}
-
+	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@PathVariable Long id, @RequestBody BookDto bookDto) throws BookNotFoundException {
-		bookService.update(id, bookDto);
+	public void update(@PathVariable Long id, @RequestBody AuthorDto authorDto) throws Exception {
+		authorService.update(id, authorDto);
 	}
-
+	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
-		bookService.delete(id);
+		authorService.delete(id);
 	}
 }

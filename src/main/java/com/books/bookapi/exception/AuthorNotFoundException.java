@@ -1,9 +1,9 @@
 package com.books.bookapi.exception;
 
-public class BookNotFoundException  extends Exception{
+public class AuthorNotFoundException  extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
-	public BookNotFoundException(String message) {
+	public AuthorNotFoundException(String message) {
         super(message);
     }
 }

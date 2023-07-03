@@ -1,13 +1,19 @@
 package com.books.bookapi.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -19,6 +25,16 @@ public class Book {
 	@Column
 	@NotBlank(message="The name may not be null!")
 	private String name;
+	
+	
+    @ManyToMany
+    @NotNull
+    @JoinTable(
+        name = "book_author",
+        joinColumns = @JoinColumn(name = "book_id"),
+        inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -34,6 +50,14 @@ public class Book {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(Set<Author> authors) {
+		this.authors = authors;
 	}
 
 	@Override
